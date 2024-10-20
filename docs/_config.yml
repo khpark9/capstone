@@ -1,6 +1,6 @@
 # GitHub Pages configuration file
 
-title: Predicting Media Trends - Genre, Duration, and Popularity Across Streaming Platforms
+title: Capstone
 description: This project dives into analyzing the relationship between genre and content duration as well as examining the popularity of different genres across four major platforms -- Netflix, Disney+, Amazon Prime, and Hulu. 
 
 remote_theme: pages-themes/minimal@v0.2.0
