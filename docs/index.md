@@ -1,6 +1,3 @@
-# GitHub Pages Portfolio
+# Predicting Media Trends - Genre, Duration, and Popularity Across Streaming Platforms
 
-Username/Name: Karis Park
-
-Description: Hello! I am a senior taking CRCP 3320 with Professor Brittni Watkins during the Fall 2024 Semester.
-
+blah blah blah
