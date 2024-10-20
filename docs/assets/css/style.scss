@@ -3,3 +3,16 @@
 
 @import "{{ site.theme }}";
 
+body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light grey text */
+  }
+  
+  a {
+    color: #bb86fc; /* Light purple for links */
+  }
+  
+  footer {
+    background-color: #333333; /* Darker grey for footer */
+  }
+  
