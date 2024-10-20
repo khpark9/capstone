@@ -4,9 +4,7 @@
 @import "{{ site.theme }}";
 
 header {
-    flex: 0 0 20%; /* Fixes the width of the Capstone section to 20% */
-    text-align: left; /* Aligns text to the left */
-    padding: 20px;
+    background-color: #182E59;
 }
 
 body {
