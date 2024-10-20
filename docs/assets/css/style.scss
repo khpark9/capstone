@@ -3,16 +3,46 @@
 
 @import "{{ site.theme }}";
 
+header {
+    text-align: left;
+    padding: 20px;
+}
+
 body {
-    background-color: #121212; /* Dark background */
-    color: #e0e0e0; /* Light grey text */
-  }
+    background-color: #262626; /* Dark background */
+    color: #f2f2f2; /* Light grey text */
+
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
+
+section {
+    padding: 20px;
+    width: 100%; /* Ensures the section fills the rest of the grid */
+}
   
-  a {
+a {
     color: #bb86fc; /* Light purple for links */
-  }
+}
+
+
+/* Optionally, customize font usage for specific elements */
+h1, h2, h3 {
+    font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
+}
   
-  footer {
+p {
+    font-family: Geneva, sans-serif; /* Geneva as the primary font for paragraphs */
+}
+  
+footer {
     background-color: #333333; /* Darker grey for footer */
-  }
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 20% 1fr; /* 20% for Capstone, remaining space for the other section */
+    grid-gap: 20px; /* Adds space between the two sections */
+}
+
+  
   
