@@ -1,0 +1,10 @@
+# GitHub Pages configuration file
+
+title: My Portfolio
+
+description: My GitHub Pages Portfolio
+
+remote_theme: pages-themes/slate@v0.2.0
+
+plugins:
+- jekyll-remote-theme 
