@@ -4,7 +4,8 @@
 @import "{{ site.theme }}";
 
 header {
-    text-align: left;
+    flex: 0 0 20%; /* Fixes the width of the Capstone section to 20% */
+    text-align: left; /* Aligns text to the left */
     padding: 20px;
 }
 
@@ -16,8 +17,8 @@ body {
 }
 
 section {
+    flex: 1; /* The "Predicting Media..." section will take up the rest of the space */
     padding: 20px;
-    width: 100%; /* Ensures the section fills the rest of the grid */
 }
   
 a {
@@ -39,10 +40,11 @@ footer {
 }
 
 .wrapper {
-    display: grid;
-    grid-template-columns: 20% 1fr; /* 20% for Capstone, remaining space for the other section */
-    grid-gap: 20px; /* Adds space between the two sections */
+    display: flex; /* Enables flexbox layout */
+    justify-content: space-between; /* Moves elements apart */
+    align-items: flex-start; /* Aligns content at the top of the container */
 }
 
+  
   
   
