@@ -19,7 +19,7 @@ body {
 section {
     flex: 1; /* The "Predicting Media..." section will take up the rest of the space */
     padding: 5px;
-    max-width: 1000px;
+    width: 1000px;
 }
   
 a {
@@ -29,7 +29,7 @@ a {
 /* Optionally, customize font usage for specific elements */
 h1, h2, h3 {
     font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
-    max-width: 1000px;
+    width: 1000px;
 }
 
 h1 {
