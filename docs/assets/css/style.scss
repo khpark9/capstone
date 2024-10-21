@@ -47,6 +47,8 @@ footer {
     background-color: #333333; /* Darker grey for footer */
 }
 
+
+// Dropdown Button Styles
 .dropdown {
     position: relative;
     display: inline-block;
@@ -64,4 +66,9 @@ footer {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+    fill-opacity: 0.5;
 }
