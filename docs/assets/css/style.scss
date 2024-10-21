@@ -6,6 +6,7 @@
 header {
     background-color: #223631;
     border-left: 5px solid #CEDEF2;
+    padding: 20px;
 }
 
 body {
@@ -17,22 +18,27 @@ body {
 
 section {
     flex: 1; /* The "Predicting Media..." section will take up the rest of the space */
-    padding: 20px;
+    padding: 5px;
 }
   
 a {
-    color: #bb86fc; /* Light purple for links */
+    color: #69bfb7; /* Light purple for links */
 }
 
 /* Optionally, customize font usage for specific elements */
-h1 {
-    font-size: 40px;
-}
-
 h1, h2, h3 {
     font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
 }
-  
+
+h1 {
+    font-size: 28px;
+    color: #7673d9;
+}
+ 
+h2 {
+    color: #ada2f2;
+}
+
 p {
     font-family: Geneva, sans-serif; /* Geneva as the primary font for paragraphs */
 }
