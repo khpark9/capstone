@@ -72,17 +72,16 @@ footer {
     z-index: 1;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 /* Style the video: 100% width and height to cover the entire window */
 #myVideo {
     position: fixed;
     right: 0;
     bottom: 0;
     opacity: 50%;
-    min-width: 100%;
-    min-height: 100%;
+    // min-width: 100%;
+    // min-height: 100%;
+    width: 100%;        /* Ensure the width fills the screen */
+    height: 100%;       /* Ensure the height fills the screen */
+    object-fit: cover;
     z-index: -1;
-  }
+}
