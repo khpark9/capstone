@@ -5,9 +5,7 @@
 
 header {
     background-color: #223631;
-    border-width: 2px;
-    border-style: dashed;
-    border-color: #CEDEF2;
+    border-left: 5px solid #CEDEF2;
 }
 
 body {
@@ -27,6 +25,10 @@ a {
 }
 
 /* Optionally, customize font usage for specific elements */
+h1 {
+    font-size: 40px;
+}
+
 h1, h2, h3 {
     font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
 }
