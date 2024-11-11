@@ -87,4 +87,4 @@ function initChart(data) {
   }
   
   // Load the JSON data and call initChart
-  d3.json("path/to/q1_movies.json").then(data => initChart(data));
+  d3.json("../data/q1/q1_movies.json").then(data => initChart(data));
