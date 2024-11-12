@@ -78,7 +78,7 @@ function initChart(data) {
             });
   
         label
-            .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+            .filter(function(d) { d.parent === focus || this.style.display === "inline"; })
             .transition(transition)
             .style("fill-opacity", d => d.parent === focus ? 1 : 0)
             .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
