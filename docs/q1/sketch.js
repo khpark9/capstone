@@ -106,7 +106,7 @@ function _1(md){return(
       const main = runtime.module();
       function toString() { return this.url; }
       const fileAttachments = new Map([
-        ["flare-2.json", {url: new URL("../../data/q1/q1_movies.json", import.meta.url), mimeType: "application/json", toString}]
+        ["flare-2.json", {url: new URL("./genres_grouped_movies.json", import.meta.url), mimeType: "application/json", toString}]
     ]);
       main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
       main.variable(observer()).define(["md"], _1);
