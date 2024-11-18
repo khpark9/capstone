@@ -1,117 +1,146 @@
 function _1(md){return(
-    md`<div style="color: grey; font: 13px/25.5px var(--sans-serif); text-transform: uppercase;"><h1 style="display: none;">Zoomable circle packing</h1><a href="https://d3js.org/">D3</a> › <a href="/@d3/gallery">Gallery</a></div>
+  md`<div style="color: grey; font: 13px/25.5px var(--sans-serif); text-transform: uppercase;"><h1 style="display: none;">Bar chart transitions</h1><a href="https://d3js.org/">D3</a> › <a href="/@d3/gallery">Gallery</a></div>
+  
+  # Bar chart transitions
+  
+  This [bar chart](/@d3/bar-chart/2) supports animated transitions. For [object constancy](https://bost.ocks.org/mike/constancy/), bars are keyed by name, making it possible to follow changes in value and order across transitions. Use the dropdown menu to change the sort order.`
+  )}
+  
+  function _order(Inputs)
+  {
+    const select = Inputs.select(
+      new Map([
+        ["Alphabetical", (a, b) => a.letter.localeCompare(b.letter)],
+        ["Frequency, ascending", (a, b) => a.frequency - b.frequency],
+        ["Frequency, descending", (a, b) => b.frequency - a.frequency]
+      ]),
+      { label: "Order" }
+    );
     
-    # Zoomable circle packing
+    return select;
+  }
+  
+  
+  function _chart(d3,data)
+  {
+  
+    // Specify the chart’s dimensions.
+    const width = 640;
+    const height = 400;
+    const marginTop = 20;
+    const marginRight = 0;
+    const marginBottom = 30;
+    const marginLeft = 40;
     
-    Click to zoom in or out.`
-    )}
+    // Declare the x (horizontal position) scale and the corresponding axis generator.
+    const x = d3.scaleBand()
+      .domain(data.map(d => d.letter))
+      .range([marginLeft, width - marginRight])
+      .padding(0.1);
+  
+    const xAxis = d3.axisBottom(x).tickSizeOuter(0);
+  
+    // Declare the y (vertical position) scale.
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.frequency)]).nice()
+      .range([height - marginBottom, marginTop]);
+  
+    // Create the SVG container.
+    const svg = d3.create("svg")
+        .attr("viewBox", [0, 0, width, height])
+        .attr("style", `max-width: ${width}px; height: auto; font: 10px sans-serif; overflow: visible;`);
+  
+    // Create a bar for each letter.
+    const bar = svg.append("g")
+        .attr("fill", "steelblue")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+        .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
+        .attr("x", d => x(d.letter))
+        .attr("y", d => y(d.frequency))
+        .attr("height", d => y(0) - y(d.frequency))
+        .attr("width", x.bandwidth());
+  
+    // Create the axes.
+    const gx = svg.append("g")
+        .attr("transform", `translate(0,${height - marginBottom})`)
+        .call(xAxis);
     
-    function _chart(d3,data)
-    {
-    
-      // Specify the chart’s dimensions.
-      const width = 928;
-      const height = width;
-    
-      // Create the color scale.
-      const color = d3.scaleLinear()
-          .domain([0, 5])
-          .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-          .interpolate(d3.interpolateHcl);
-    
-      // Compute the layout.
-      const pack = data => d3.pack()
-          .size([width, height])
-          .padding(3)
-        (d3.hierarchy(data)
-          .sum(d => d.value)
-          .sort((a, b) => b.value - a.value));
-      const root = pack(data);
-    
-      // Create the SVG container.
-      const svg = d3.create("svg")
-          .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
-          .attr("width", width)
-          .attr("height", height)
-          .attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${color(0)}; cursor: pointer;`);
-    
-      // Append the nodes.
-      const node = svg.append("g")
-        .selectAll("circle")
-        .data(root.descendants().slice(1))
-        .join("circle")
-          .attr("fill", d => d.children ? color(d.depth) : "white")
-          .attr("pointer-events", d => !d.children ? "none" : null)
-          .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
-          .on("mouseout", function() { d3.select(this).attr("stroke", null); })
-          .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
-    
-      // Append the text labels.
-      const label = svg.append("g")
-          .style("font", "10px sans-serif")
-          .attr("pointer-events", "none")
-          .attr("text-anchor", "middle")
-        .selectAll("text")
-        .data(root.descendants())
-        .join("text")
-          .style("fill-opacity", d => d.parent === root ? 1 : 0)
-          .style("display", d => d.parent === root ? "inline" : "none")
-          .text(d => d.data.name);
-    
-      // Create the zoom behavior and zoom immediately in to the initial focus node.
-      svg.on("click", (event) => zoom(event, root));
-      let focus = root;
-      let view;
-      zoomTo([focus.x, focus.y, focus.r * 2]);
-    
-      function zoomTo(v) {
-        const k = width / v[2];
-    
-        view = v;
-    
-        label.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-        node.attr("transform", d => `translate(${(d.x - v[0]) * k},${(d.y - v[1]) * k})`);
-        node.attr("r", d => d.r * k);
+    const gy = svg.append("g")
+        .attr("transform", `translate(${marginLeft},0)`)
+        .call(d3.axisLeft(y).tickFormat((y) => (y * 100).toFixed()))
+        .call(g => g.select(".domain").remove());
+  
+    // Return the chart, with an update function that takes as input a domain
+    // comparator and transitions the x axis and bar positions accordingly. 
+    return Object.assign(svg.node(), {
+      update(order) {
+        x.domain(data.sort(order).map(d => d.letter));
+  
+        const t = svg.transition()
+            .duration(750);
+  
+        bar.data(data, d => d.letter)
+            .order()
+          .transition(t)
+            .delay((d, i) => i * 20)
+            .attr("x", d => x(d.letter));
+  
+        gx.transition(t)
+            .call(xAxis)
+          .selectAll(".tick")
+            .delay((d, i) => i * 20);
       }
-    
-      function zoom(event, d) {
-        const focus0 = focus;
-    
-        focus = d;
-    
-        const transition = svg.transition()
-            .duration(event.altKey ? 7500 : 750)
-            .tween("zoom", d => {
-              const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
-              return t => zoomTo(i(t));
-            });
-    
-        label
-          .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-          .transition(transition)
-            .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-            .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-            .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-      }
-    
-      return svg.node();
-    }
-    
-    
-    function _data(FileAttachment){return(
-    FileAttachment("flare-2.json").json()
-    )}
-    
-    export default function define(runtime, observer) {
-      const main = runtime.module();
-      function toString() { return this.url; }
-      const fileAttachments = new Map([
-        ["flare-2.json", {url: new URL("./q1_movies.json", import.meta.url), mimeType: "application/json", toString}]
+    });
+  }
+  
+  
+  function _update(chart,order){return(
+  chart.update(order)
+  )}
+  
+  function _data(FileAttachment){return(
+  FileAttachment("alphabet.csv").csv({typed: true})
+  )}
+  
+  function _6(md){return(
+  md`---
+  The *trigger* cell below uses a timeout to change the selected value in the *order* input above, triggering an animation on page load for demonstrative purposes. If the user interacts with the menu prior to the timeout, the timeout is cleared. You don’t need this cell to use the chart above.`
+  )}
+  
+  function _trigger($0,d3,Event,invalidation)
+  {
+    const input = $0.input;
+    const interval = d3.interval(() => {
+      input.selectedIndex = (input.selectedIndex + 1) % input.length;
+      input.dispatchEvent(new Event("input", {bubbles: true}));
+    }, 4000);
+    const clear = () => interval.stop();
+    input.addEventListener("change", clear, {once: true});
+    invalidation.then(() => (clear(), input.removeEventListener("change", clear)));
+  }
+  
+  
+  function _8(md){return(
+  md`For an equivalent with Observable Plot, see [this notebook](https://observablehq.com/@observablehq/plot-bar-chart-transitions).`
+  )}
+  
+  export default function define(runtime, observer) {
+    const main = runtime.module();
+    function toString() { return this.url; }
+    const fileAttachments = new Map([
+      ["movies_bar_graph.json", {url: new URL("./q1_movies.json", import.meta.url), mimeType: "application/json", toString}]
     ]);
-      main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
-      main.variable(observer()).define(["md"], _1);
-      main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
-      main.variable(observer("data")).define("data", ["FileAttachment"], _data);
-      return main;
-    }
-    
+    main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
+    main.variable(observer()).define(["md"], _1);
+    main.variable(observer("viewof order")).define("viewof order", ["Inputs"], _order);
+    main.variable(observer("order")).define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
+    main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
+    main.variable(observer("update")).define("update", ["chart","order"], _update);
+    main.variable(observer("data")).define("data", ["FileAttachment"], _data);
+    main.variable(observer()).define(["md"], _6);
+    main.variable(observer("trigger")).define("trigger", ["viewof order","d3","Event","invalidation"], _trigger);
+    main.variable(observer()).define(["md"], _8);
+    return main;
+  }
