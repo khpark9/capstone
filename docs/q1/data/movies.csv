@@ -1,4 +1,4 @@
-,Genre,Average Duration,Median Duration,Standard Deviation,Minimum,Maximum
+,genre,avgDuration,medDuration,sd,min,max
 0,Documentary,81.01006036217304,84.0,37.356710295784595,2,541
 1,Family,73.8336,86.0,35.981017466635755,1,182
 2,Drama,106.20450160771705,103.0,26.77197571536268,0,312
