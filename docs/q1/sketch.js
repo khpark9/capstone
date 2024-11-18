@@ -130,7 +130,7 @@ function _1(md){return(
     const main = runtime.module();
     function toString() { return this.url; }
     const fileAttachments = new Map([
-      ["movies.csv", {url: new URL("./data/q1/movies.csv", import.meta.url), mimeType: "text/csv", toString}]
+      ["movies.csv", {url: new URL("./data/movies.csv", import.meta.url), mimeType: "text/csv", toString}]
     ]);
     main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
     main.variable(observer()).define(["md"], _1);
