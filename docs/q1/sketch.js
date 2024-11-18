@@ -10,9 +10,9 @@ function _1(md){return(
   {
     const select = Inputs.select(
       new Map([
-        ["Alphabetical", (a, b) => a.letter.localeCompare(b.genre)],
-        ["Duration, ascending", (a, b) => a.duration - b.duration],
-        ["Duration, descending", (a, b) => b.duration - a.duration]
+        ["Alphabetical", (a, b) => a.letter.localeCompare(b.Genre)],
+        ["Duration, ascending", (a, b) => a.Average_Duration - b.Average_Duration],
+        ["Duration, descending", (a, b) => b.Average_Duration - a.Average_Duration]
       ]),
       { label: "Order" }
     );
@@ -34,7 +34,7 @@ function _1(md){return(
     
     // Declare the x (horizontal position) scale and the corresponding axis generator.
     const x = d3.scaleBand()
-      .domain(data.map(d => d.genre))
+      .domain(data.map(d => d.Genre))
       .range([marginLeft, width - marginRight])
       .padding(0.1);
   
@@ -42,7 +42,7 @@ function _1(md){return(
   
     // Declare the y (vertical position) scale.
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.duration)]).nice()
+      .domain([0, d3.max(data, d => d.Average_Duration)]).nice()
       .range([height - marginBottom, marginTop]);
   
     // Create the SVG container.
@@ -57,9 +57,9 @@ function _1(md){return(
       .data(data)
       .join("rect")
         .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
-        .attr("x", d => x(d.genre))
-        .attr("y", d => y(d.duration))
-        .attr("height", d => y(0) - y(d.duration))
+        .attr("x", d => x(d.Genre))
+        .attr("y", d => y(d.Average_Duration))
+        .attr("height", d => y(0) - y(d.Average_Duration))
         .attr("width", x.bandwidth());
   
     // Create the axes.
@@ -76,16 +76,16 @@ function _1(md){return(
     // comparator and transitions the x axis and bar positions accordingly. 
     return Object.assign(svg.node(), {
       update(order) {
-        x.domain(data.sort(order).map(d => d.genre));
+        x.domain(data.sort(order).map(d => d.Genre));
   
         const t = svg.transition()
             .duration(750);
   
-        bar.data(data, d => d.genre)
+        bar.data(data, d => d.Genre)
             .order()
           .transition(t)
             .delay((d, i) => i * 20)
-            .attr("x", d => x(d.genre));
+            .attr("x", d => x(d.Genre));
   
         gx.transition(t)
             .call(xAxis)
