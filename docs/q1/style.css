@@ -1,34 +1,30 @@
-@import "../assets/css/style.scss";
-
 header {
     /* background-color: #223631; */
-    /* border-left: 5px solid #CEDEF2; */
+    border-left: 5px solid #CEDEF2;
     padding: 20px;
 }
 
 body {
-    text-align: center;
     background-color: #262626; /* Dark background */
     color: #f2f2f2; /* Light grey text */
+
+    text-align: center;
 
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
-/* 
-
-
 section {
-    flex: 1; The "Predicting Media..." section will take up the rest of the space
+    flex: 1; /* The "Predicting Media..." section will take up the rest of the space */
     padding: 5px;
 }
   
-a {
-    color: #69bfb7; Light green for links
-}
+/* a {
+    color: #69bfb7; /* Light green for links *
+} */
 
-/* Optionally, customize font usage for specific elements 
+/* Optionally, customize font usage for specific elements */
 h1, h2, h3 {
-    font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks 
+    font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
 }
 
 h1 {
@@ -38,10 +34,10 @@ h1 {
 
 #outline {
     text-shadow: 
-        -1px -1px 0 #000,   /* Top-left shadow 
-        1px -1px 0 #000,    /* Top-right shadow 
-        -1px 1px 0 #000,    /* Bottom-left shadow /
-        1px 1px 0 #000;     /* Bottom-right shadow 
+        -1px -1px 0 #000,   /* Top-left shadow */
+        1px -1px 0 #000,    /* Top-right shadow */
+        -1px 1px 0 #000,    /* Bottom-left shadow */
+        1px 1px 0 #000;     /* Bottom-right shadow */
 }
  
 h2 {
@@ -49,14 +45,14 @@ h2 {
 }
 
 p {
-    font-family: Geneva, sans-serif; /* Geneva as the primary font for paragraphs 
+    font-family: Geneva, sans-serif; /* Geneva as the primary font for paragraphs */
 }
   
 footer {
-    background-color: #333333; /* Darker grey for footer 
+    background-color: #333333; /* Darker grey for footer */
 }
 
-// Dropdown Button Styles
+/* Dropdown Button Styles */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -86,18 +82,16 @@ footer {
     display: block;
 }
 
-/* Style the video: 100% width and height to cover the entire window 
+/* Style the video: 100% width and height to cover the entire window */
 #myVideo {
     position: fixed;
     right: 0;
     bottom: 0;
     opacity: 50%;
-    // min-width: 100%;
-    // min-height: 100%;
-    width: 100%;        /* Ensure the width fills the screen 
-    height: 100%;       /* Ensure the height fills the screen 
+    /* min-width: 100%;
+    min-height: 100%; */
+    width: 100%;        /* Ensure the width fills the screen */
+    height: 100%;       /* Ensure the height fills the screen */
     object-fit: cover;
     z-index: -1;
 }
-
-*/
