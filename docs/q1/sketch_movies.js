@@ -59,7 +59,7 @@ function _chart(d3,data) {
       .attr("y", d => y(d.avgDuration))
       .attr("height", d => y(0) - y(d.avgDuration))
       .attr("width", x.bandwidth())
-      .attr("fill", (d, i) => d3.interpolateViridis(i / (data.length - 1)));
+      .attr("fill", (d, i) => d3.interpolateWarm(i / (data.length - 1)));
 
   // Create the axes.
   const gx = svg.append("g")
@@ -105,7 +105,7 @@ function _chart(d3,data) {
           .attr("y", d => y(d.avgDuration))
           .attr("height", d => y(0) - y(d.avgDuration))
           .attr("width", x.bandwidth())
-          .attr("fill", (d, i) => d3.interpolateViridis(i / (data.length - 1)));
+          .attr("fill", (d, i) => d3.interpolateWarm(i / (data.length - 1)));
 
       gx.transition(t)
           .call(xAxis)
