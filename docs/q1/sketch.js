@@ -45,9 +45,8 @@ function _chart(d3,data) {
     .attr("x", width / 2)
     .attr("y", marginTop * 0.75)
     .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .style("font-weight", "bold")
-    .style("fill", "#f2f2f2") // Subdued text color
+    .style("font-size", "28px")
+    .style("fill", "#69bfb7") // Subdued text color
     .text("Average Movie Duration by Genre");
 
   // Create a bar for each letter.
@@ -80,7 +79,7 @@ function _chart(d3,data) {
   const gy = svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y)
-          .tickFormat(d => (d * 100).toFixed())
+        .tickFormat(d => Math.round(d)) 
           .ticks(10))
         .call(g => g.selectAll("text")
           .style("fill", "#f2f2f2"))  // Make text light colored
@@ -107,17 +106,6 @@ function _chart(d3,data) {
           .attr("height", d => y(0) - y(d.avgDuration))
           .attr("width", x.bandwidth())
           .attr("fill", (d, i) => d3.interpolateViridis(i / (data.length - 1)));
-
-      // Update axis with labels
-      // svg.select("g")
-      //   .transition(t)
-      //   .call(xAxis)
-      //   .call(g => g.selectAll("text")
-      //     .style("text-anchor", "end")
-      //     .attr("dx", "-.8em")
-      //     .attr("dy", ".15em")
-      //     .attr("transform", "rotate(-45)")
-      //     .style("fill", "#f2f2f2"));
 
       gx.transition(t)
           .call(xAxis)
