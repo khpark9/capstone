@@ -135,12 +135,12 @@ export default function define(runtime, observer) {
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   // main.variable(observer()).define(["md"], _1);
   main.variable(observer("viewof order")).define("viewof order", ["Inputs"], _order);
-  main.variable(observer("order")).define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
+  // main.variable(observer("order")).define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
   main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
   main.variable(observer("update")).define("update", ["chart","order"], _update);
-  main.variable(observer("data")).define("data", ["FileAttachment"], _data);
+  // main.variable(observer("data")).define("data", ["FileAttachment"], _data);
   // main.variable(observer()).define(["md"], _6);
-  main.variable(observer("trigger")).define("trigger", ["viewof order","d3","Event","invalidation"], _trigger);
+  // main.variable(observer("trigger")).define("trigger", ["viewof order","d3","Event","invalidation"], _trigger);
   // main.variable(observer()).define(["md"], _8);
   return main;
 }
