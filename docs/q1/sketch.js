@@ -1,33 +1,23 @@
-// function _1(md){return(
-//   md`<div style="color: grey; font: 13px/25.5px var(--sans-serif); text-transform: uppercase;"><h1 style="display: none;">Bar chart transitions</h1><a href="https://d3js.org/">D3</a> › <a href="/@d3/gallery">Gallery</a></div>
-
-//   # Bar chart transitions
-
-//   This [bar chart](/@d3/bar-chart/2) supports animated transitions. For [object constancy](https://bost.ocks.org/mike/constancy/), bars are keyed by name, making it possible to follow changes in value and order across transitions. Use the dropdown menu to change the sort order.`
-//   )}
-
-function _order(Inputs)
-{
+function _order(Inputs) {
   const select = Inputs.select(
     new Map([
       ["Alphabetical", (a, b) => a.genre.localeCompare(b.genre)],
-      ["Average Duration (mins), ascending", (a, b) => a.avgDuration - b.avgDuration],
-      ["Average Duration (mins), descending", (a, b) => b.avgDuration - a.avgDuration]
+      ["Average Duration (mins), Ascending", (a, b) => a.avgDuration - b.avgDuration],
+      ["Average Duration (mins), Descending", (a, b) => b.avgDuration - a.avgDuration]
     ]),
-    { label: "Order" }
+    { 
+      style: "background: black;"
+    }
   );
   
   return select;
 }
 
-
-function _chart(d3,data)
-{
-
+function _chart(d3,data) {
   // Specify the chart’s dimensions.
-  const width = 640;
+  const width = 1300;
   const height = 400;
-  const marginTop = 20;
+  const marginTop = 50;
   const marginRight = 0;
   const marginBottom = 30;
   const marginLeft = 40;
@@ -50,27 +40,54 @@ function _chart(d3,data)
       .attr("viewBox", [0, 0, width, height])
       .attr("style", `max-width: ${width}px; height: auto; font: 10px sans-serif; overflow: visible;`);
 
+  // Add title to the chart
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", marginTop * 0.75)
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("font-weight", "bold")
+    .style("fill", "#f2f2f2") // Subdued text color
+    .text("Average Movie Duration by Genre");
+
   // Create a bar for each letter.
   const bar = svg.append("g")
-      .attr("fill", "steelblue")
     .selectAll("rect")
     .data(data)
     .join("rect")
-      .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
+      // .style("mix-blend-mode", "multiply") // Darker color when bars overlap during the transition.
       .attr("x", d => x(d.genre))
       .attr("y", d => y(d.avgDuration))
       .attr("height", d => y(0) - y(d.avgDuration))
-      .attr("width", x.bandwidth());
+      .attr("width", x.bandwidth())
+      .attr("fill", (d, i) => d3.interpolateViridis(i / (data.length - 1)));
 
   // Create the axes.
   const gx = svg.append("g")
       .attr("transform", `translate(0,${height - marginBottom})`)
-      .call(xAxis);
-  
+      .call(xAxis)
+      .call(g => g.selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)")
+        .style("fill", "#f2f2f2"))
+      .call(g => g.selectAll("line")
+        .style("stroke", "#f2f2f2"))  // Make tick lines light colored
+      .call(g => g.select(".domain")
+        .style("stroke", "#f2f2f2"));  // Make axis line light colored
+
   const gy = svg.append("g")
-      .attr("transform", `translate(${marginLeft},0)`)
-      .call(d3.axisLeft(y).tickFormat((y) => (y * 100).toFixed()))
-      .call(g => g.select(".domain").remove());
+        .attr("transform", `translate(${marginLeft},0)`)
+        .call(d3.axisLeft(y)
+          .tickFormat(d => (d * 100).toFixed())
+          .ticks(10))
+        .call(g => g.selectAll("text")
+          .style("fill", "#f2f2f2"))  // Make text light colored
+        .call(g => g.selectAll("line")
+          .style("stroke", "#f2f2f2"))  // Make tick lines light colored
+        .call(g => g.select(".domain")
+          .style("stroke", "#f2f2f2"));  // Make axis line light colored
 
   // Return the chart, with an update function that takes as input a domain
   // comparator and transitions the x axis and bar positions accordingly. 
@@ -85,7 +102,22 @@ function _chart(d3,data)
           .order()
         .transition(t)
           .delay((d, i) => i * 20)
-          .attr("x", d => x(d.genre));
+          .attr("x", d => x(d.genre))
+          .attr("y", d => y(d.avgDuration))
+          .attr("height", d => y(0) - y(d.avgDuration))
+          .attr("width", x.bandwidth())
+          .attr("fill", (d, i) => d3.interpolateViridis(i / (data.length - 1)));
+
+      // Update axis with labels
+      // svg.select("g")
+      //   .transition(t)
+      //   .call(xAxis)
+      //   .call(g => g.selectAll("text")
+      //     .style("text-anchor", "end")
+      //     .attr("dx", "-.8em")
+      //     .attr("dy", ".15em")
+      //     .attr("transform", "rotate(-45)")
+      //     .style("fill", "#f2f2f2"));
 
       gx.transition(t)
           .call(xAxis)
@@ -95,19 +127,13 @@ function _chart(d3,data)
   });
 }
 
-
-function _update(chart,order){return(
-chart.update(order)
+function _update(chart,order) {return(
+  chart.update(order)
 )}
 
-function _data(FileAttachment){return(
-FileAttachment("movies.csv").csv({typed: true})
+function _data(FileAttachment) {return(
+  FileAttachment("movies.csv").csv({typed: true})
 )}
-
-// function _6(md){return(
-// md`---
-// The *trigger* cell below uses a timeout to change the selected value in the *order* input above, triggering an animation on page load for demonstrative purposes. If the user interacts with the menu prior to the timeout, the timeout is cleared. You don’t need this cell to use the chart above.`
-// )}
 
 function _trigger($0,d3,Event,invalidation)
 {
@@ -121,26 +147,36 @@ function _trigger($0,d3,Event,invalidation)
   invalidation.then(() => (clear(), input.removeEventListener("change", clear)));
 }
 
-
-// function _8(md){return(
-// md`For an equivalent with Observable Plot, see [this notebook](https://observablehq.com/@observablehq/plot-bar-chart-transitions).`
-// )}
-
 export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
     ["movies.csv", {url: new URL("./data/movies.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
+
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
-  // main.variable(observer()).define(["md"], _1);
   main.variable(observer("viewof order")).define("viewof order", ["Inputs"], _order);
-  // main.variable(observer("order")).define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
   main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
-  main.variable(observer("update")).define("update", ["chart","order"], _update);
-  // main.variable(observer("data")).define("data", ["FileAttachment"], _data);
-  // main.variable(observer()).define(["md"], _6);
-  // main.variable(observer("trigger")).define("trigger", ["viewof order","d3","Event","invalidation"], _trigger);
-  // main.variable(observer()).define(["md"], _8);
+
+  main.define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
+  
+  main.variable(observer("update")).define("update", ["chart","order"], function(chart, order) {
+    const result = _update(chart, order);
+    return Object.assign(document.createElement("div"), {
+      style: "display: none;",  
+      value: result
+    });
+  });
+
+  main.variable(observer("trigger")).define("trigger", ["viewof order","d3","Event","invalidation"], function(viewof_order, d3, Event, invalidation) {
+    const result = _trigger(viewof_order, d3, Event, invalidation);
+    return Object.assign(document.createElement("div"), {
+      style: "display: none;",
+      value: result
+    });
+  });
+
+  main.define("data", ["FileAttachment"], _data);
+
   return main;
 }
