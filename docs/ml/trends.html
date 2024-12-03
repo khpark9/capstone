@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Predictions:</title>
-        <link rel="stylesheet" type="text/css" href="../assets/css/style.scss"/>
+        <link rel="stylesheet" type="text/css" href="./style.css"/>
 
         <style>
             #hide {
@@ -18,39 +18,36 @@
                 max-width: 175%;
             }
         </style>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+        <script type="text/javascript" src="./graph.js"></script> 
+        <script type="text/javascript" src="./flip_folder.js"></script> 
     </head>
 
     <body>
         <h1>What genre will be the most popular in the next couple of years?</h1>
+
         <div>
-            <h2>Different Genres</h2>
-            <p>
-                Current popular genres:
-            </p>
-            <p>
-                Methods used
-            </p>
-            <p>
-                Results!
-            </p>
+            <h2>Some Genres to Look At:</h2>
+            <div id="graph"></div>
+        </div>
+
+        <div>
+            <h2>Popular Genres Over Time:</h2>
+            <div class="container">
+                <div id="calendar"></div>
+                <div id="genre-display" class="hidden">
+                    <h2 id="selected-year"></h2>
+                    <div id="genre-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            
         </div>    
 
-        <script type="module">
-            import define from "./index.js";
-            import {Runtime, Library, Inspector} from "../q1/runtime.js";
-            
-            const runtime = new Runtime();
-            const main = runtime.module(define, (name) => {
-                if (name === "chart") {
-                    return new Inspector(document.querySelector("#chart"));
-                }
-                if (name === "viewof order") {
-                    return new Inspector(document.querySelector("#order-container"));
-                }
-                return true;
-            });
-        </script>
-         
         <p>
             <a href="../index.html">Go Back to Home Page</a>
         </p>

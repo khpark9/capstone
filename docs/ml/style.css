@@ -1,0 +1,133 @@
+header {
+    /* background-color: #223631; */
+    border-left: 5px solid #CEDEF2;
+    padding: 20px;
+}
+
+body {
+    background-color: #262626; /* Dark background */
+    color: #000; 
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
+
+section {
+    flex: 1; /* The "Predicting Media..." section will take up the rest of the space */
+    padding: 5px;
+}
+  
+a {
+    color: #69bfb7; /* Light green for links */
+}
+
+h1, h2, h3 {
+    font-family: Geneva, Tahoma, sans-serif; /* Geneva with fallbacks */
+}
+
+h1 {
+    font-size: 28px;
+    color: #7673d9;
+
+    text-align: left;
+    margin-top: 85px;
+    margin-left: 100px;
+}
+
+#outline {
+    text-shadow: 
+        -1px -1px 0 #000,   /* Top-left shadow */
+        1px -1px 0 #000,    /* Top-right shadow */
+        -1px 1px 0 #000,    /* Bottom-left shadow */
+        1px 1px 0 #000;     /* Bottom-right shadow */
+}
+ 
+h2 {
+    color: #ada2f2;
+
+    text-align: left;
+    margin-left: 100px;
+}
+
+p {
+    font-family: Geneva, sans-serif; /* Geneva as the primary font for paragraphs */
+    color: black; /* Light grey text */
+
+    text-align: left;
+    margin-left: 150px;
+}
+
+#graph {
+    margin-left: 150px;
+    margin-bottom: 50px;
+    /* border: 2px solid red; border for debugging */
+}
+
+ul.a {
+    text-align: left;
+    margin-left: 150px;
+    margin-right: 75px;
+
+    list-style-type: square;
+    color: #f2f2f2;
+}
+  
+footer {
+    background-color: #333333; /* Darker grey for footer */
+}
+
+.container {
+    display: flex;
+    gap: 20px; /* Space between the calendar and genre display */
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    margin-bottom: 50px;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 columns */
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.year {
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+    background-color: #7673d9; /* Default to the first gradient color */
+}
+
+.year:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+#selected-year {
+    padding: 15px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+#genre-display {
+    width: 300px; /* Fixed width for the genre display */
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    text-align: left;
+    color: #222; /* Dark text for better contrast */
+}
+
+#genre-list p {
+    margin: 5px 0;
+    text-align: center;
+}
+
+#genre-display.hidden {
+    display: none;
+}
