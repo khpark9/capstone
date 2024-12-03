@@ -162,6 +162,30 @@ function _order(Inputs) {
     });
   
     main.define("data", ["FileAttachment"], _data);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.a li');
+      const prevButton = document.getElementById('prev');
+      const nextButton = document.getElementById('next');
+      let currentIndex = 0;
+
+      // Initialize the first item as active
+      items[currentIndex].classList.add('active');
+
+      // Show the next item
+      nextButton.addEventListener('click', () => {
+          items[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % items.length; // Loop back to the start
+          items[currentIndex].classList.add('active');
+      });
+
+      // Show the previous item
+      prevButton.addEventListener('click', () => {
+          items[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex - 1 + items.length) % items.length; // Loop back to the end
+          items[currentIndex].classList.add('active');
+      });
+    });
   
     return main;
   }

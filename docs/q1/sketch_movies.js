@@ -1,4 +1,4 @@
-function _order(Inputs) {
+  function _order(Inputs) {
   const select = Inputs.select(
     new Map([
       ["Alphabetical", (a, b) => a.genre.localeCompare(b.genre)],
@@ -9,11 +9,11 @@ function _order(Inputs) {
       style: "background: black;"
     }
   );
-  
-  return select;
-}
 
-function _chart(d3,data) {
+  return select;
+  }
+
+  function _chart(d3,data) {
   // Specify the chart’s dimensions.
   const width = 1300;
   const height = 400;
@@ -21,7 +21,7 @@ function _chart(d3,data) {
   const marginRight = 0;
   const marginBottom = 30;
   const marginLeft = 40;
-  
+
   // Declare the x (horizontal position) scale and the corresponding axis generator.
   const x = d3.scaleBand()
     .domain(data.map(d => d.genre))
@@ -113,18 +113,18 @@ function _chart(d3,data) {
           .delay((d, i) => i * 20);
     }
   });
-}
+  }
 
-function _update(chart,order) {return(
+  function _update(chart,order) {return(
   chart.update(order)
-)}
+  )}
 
-function _data(FileAttachment) {return(
+  function _data(FileAttachment) {return(
   FileAttachment("movies.csv").csv({typed: true})
-)}
+  )}
 
-function _trigger($0,d3,Event,invalidation)
-{
+  function _trigger($0,d3,Event,invalidation)
+  {
   const input = $0.input;
   const interval = d3.interval(() => {
     input.selectedIndex = (input.selectedIndex + 1) % input.length;
@@ -133,9 +133,9 @@ function _trigger($0,d3,Event,invalidation)
   const clear = () => interval.stop();
   input.addEventListener("change", clear, {once: true});
   invalidation.then(() => (clear(), input.removeEventListener("change", clear)));
-}
+  }
 
-export default function define(runtime, observer) {
+  export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
@@ -147,7 +147,7 @@ export default function define(runtime, observer) {
   main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
 
   main.define("order", ["Generators", "viewof order"], (G, _) => G.input(_));
-  
+
   main.variable(observer("update")).define("update", ["chart","order"], function(chart, order) {
     const result = _update(chart, order);
     return Object.assign(document.createElement("div"), {
@@ -166,5 +166,29 @@ export default function define(runtime, observer) {
 
   main.define("data", ["FileAttachment"], _data);
 
+  document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.a li');
+      const prevButton = document.getElementById('prev');
+      const nextButton = document.getElementById('next');
+      let currentIndex = 0;
+
+      // Initialize the first item as active
+      items[currentIndex].classList.add('active');
+
+      // Show the next item
+      nextButton.addEventListener('click', () => {
+          items[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % items.length; // Loop back to the start
+          items[currentIndex].classList.add('active');
+      });
+
+      // Show the previous item
+      prevButton.addEventListener('click', () => {
+          items[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex - 1 + items.length) % items.length; // Loop back to the end
+          items[currentIndex].classList.add('active');
+      });
+  });
+
   return main;
-}
+  }
