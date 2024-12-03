@@ -38,6 +38,16 @@ layout: default
                 Results!
             </p>
         </div>    
+
+        <script type="module">
+
+            import define from "./index.js";
+            import {Runtime, Library, Inspector} from "../q1/runtime.js";
+            
+            const runtime = new Runtime();
+            const main = runtime.module(define, Inspector.into(document.body));
+            
+            </script>
          
         <p>
             <a href="../index.html">Go Back to Home Page</a>
