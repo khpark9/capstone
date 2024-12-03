@@ -1,7 +1,3 @@
----
-layout: default
----
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,14 +36,20 @@ layout: default
         </div>    
 
         <script type="module">
-
             import define from "./index.js";
             import {Runtime, Library, Inspector} from "../q1/runtime.js";
             
             const runtime = new Runtime();
-            const main = runtime.module(define, Inspector.into(document.body));
-            
-            </script>
+            const main = runtime.module(define, (name) => {
+                if (name === "chart") {
+                    return new Inspector(document.querySelector("#chart"));
+                }
+                if (name === "viewof order") {
+                    return new Inspector(document.querySelector("#order-container"));
+                }
+                return true;
+            });
+        </script>
          
         <p>
             <a href="../index.html">Go Back to Home Page</a>
