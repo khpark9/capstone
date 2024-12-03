@@ -89,7 +89,7 @@ footer {
     grid-template-columns: repeat(10, 1fr); /* 10 columns */
     gap: 10px;
     max-width: 900px;
-    margin: 0 auto;
+    margin-right: 65px;
 }
 
 .year {
@@ -119,8 +119,8 @@ footer {
     background-color: #f1f1f1;
     border-radius: 5px;
     border: 1px solid #ddd;
-    text-align: left;
-    color: #222; /* Dark text for better contrast */
+
+    margin-top: 185px;
 }
 
 #genre-list p {
